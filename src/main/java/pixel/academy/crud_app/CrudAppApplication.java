@@ -15,7 +15,9 @@ public class CrudAppApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
 		return runner ->{
-			createStudent(studentDAO);
+			//createStudent(studentDAO);
+			//createMultipleStudents(studentDAO);
+			readSudent(studentDAO);
 		};
 	}
 	private void createStudent(StudentDAO studentDAO) {
@@ -30,5 +32,39 @@ public class CrudAppApplication {
 
 		// afisam ID-ul studentului salvat
 		System.out.println("Saved student. Generated ID: " + newStudent.getId());
+	}
+	private void createMultipleStudents(StudentDAO studentDAO) {
+		// cream mai multi studenti
+		System.out.println("Creating 3 students ...");
+		Student newStudent1 = new Student("Andrei", "Munteanu", "andrei@pixelacademy.md");
+		Student newStudent2 = new Student("Iulian", "Vataman", "john@pixelacademy.md");
+		Student newStudent3 = new Student("Maria", "Mirabela", "maria@pixelacademy.md");
+
+		// salvam obiectele student in baza de date
+		System.out.println("Saving the students ...");
+		studentDAO.save(newStudent1);
+		studentDAO.save(newStudent2);
+		studentDAO.save(newStudent3);
+	}
+	private void readSudent(StudentDAO studentDAO) {
+
+		// creaza un obiect de tip Student
+		System.out.println("Reading new student object ...");
+		Student newStudent = new Student("Mircea", "Popescu", "mirceap@pixel.academy");
+
+		// salveaza studentul in baza de date
+		System.out.println("Saving the student ...");
+		studentDAO.save(newStudent);
+
+		// afiseaza id-ul studentului salvat
+		int theId = newStudent.getId();
+		System.out.println("Saved student. Generated id: " + theId);
+
+		// recupereaza studentul pe baza ID-ului (PK)
+		System.out.println("Retreiving student with id: " + theId);
+		Student myStudent = studentDAO.findById(theId);
+
+		// afiseaza detaliile studentului
+		System.out.println("Found student: " + myStudent);
 	}
 }
