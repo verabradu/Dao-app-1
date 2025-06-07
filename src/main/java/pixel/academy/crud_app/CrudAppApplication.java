@@ -20,10 +20,9 @@ public class CrudAppApplication {
 			//createStudent(studentDAO);
 			//createMultipleStudents(studentDAO);
 			//readSudent(studentDAO);
-
 			//queryForStudents(studentDAO);
-			queryForStudentsByLastName(studentDAO);
-
+			//queryForStudentsByLastName(studentDAO);
+            updateStudent(studentDAO);
 		};
 	}
 
@@ -93,5 +92,21 @@ public class CrudAppApplication {
 		for (Student newStudent : theStudent) {
 			System.out.println(newStudent);
 		}
+	}
+	private void updateStudent(StudentDAO studentDAO) {
+		// gaseste studentul in baza de date folosind ID-ul (cheia primara)
+		int studentId = 1;
+		System.out.println("Getting student with id: " + studentId);
+		Student newStudent = studentDAO.findById(studentId);
+
+		// modifica prenumele studentului in "Ion
+		System.out.println("Updating student with ...");
+		newStudent.setFirstName("Ion");
+
+		// salveaza modificarile in baza de date
+		studentDAO.update(newStudent);
+
+		// afiseaza detaliile studentului actualizat
+		System.out.println("Update student: " + newStudent);
 	}
 }
